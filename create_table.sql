@@ -46,7 +46,7 @@ CREATE TABLE Empleados1
 );
 GO
 
--- Crear índices adicionales para mejorar el rendimiento
+-- Crear indices adicionales para mejorar el rendimiento
 CREATE INDEX IX_Empleados_Email ON Empleados1(Email);
 CREATE INDEX IX_Empleados_FechaContratacion ON Empleados1(FechaContratacion);
 CREATE INDEX IX_Empleados_Activo ON Empleados1(Activo) WHERE Activo = 1;
@@ -101,6 +101,22 @@ CREATE TABLE dbo.Empleados2
     CONSTRAINT PK_Employees PRIMARY KEY CLUSTERED (EmployeeID)
 );
 GO
+
+-- Columna con numeros enteros grandes
+-- OPCIÓN 1: VARCHAR (RECOMENDADO para identificadores alfanuméricos)
+CREATE TABLE Clientes (
+    ClienteID INT IDENTITY(1,1) PRIMARY KEY,
+    NumeroTarjeta VARCHAR(16) NOT NULL,  -- Más flexible
+    CodigoCuenta VARCHAR(20) NOT NULL,
+    DNI VARCHAR(15) NOT NULL
+);
+
+-- OPCIÓN 2: BIGINT (Solo si SIEMPRE serán números puros)
+CREATE TABLE ClientesNumerico (
+    ClienteID INT IDENTITY(1,1) PRIMARY KEY,
+    NumeroTarjeta BIGINT NOT NULL,  -- Más restrictivo
+    CodigoCuenta BIGINT NOT NULL
+);
 
 -- Consultar los datos
 SELECT *
